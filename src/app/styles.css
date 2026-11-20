@@ -20,3 +20,18 @@ body{margin:0;background:#f4f1e8;color:var(--ink);font:14px/1.45 var(--body)}
 .admin-drop{margin-bottom:8px}
 .admin-drop .button{margin-left:8px;min-height:32px;padding:5px 9px}
 .home-poster{max-width:100%;width:320px;border-radius:8px}
+.dashboard-revenue,.dashboard-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.dashboard-revenue p,.dashboard-heading p{color:var(--leaf);margin:0}
+.dashboard-revenue strong{font:700 28px var(--display);white-space:nowrap}
+.dashboard-heading{margin-bottom:20px}
+.dashboard-heading a{color:var(--green);font-weight:700;white-space:nowrap}
+.status-chart{display:grid;gap:12px}
+.status-chart-row{display:grid;grid-template-columns:130px minmax(0,1fr) 32px;align-items:center;gap:12px}
+.status-chart-track{height:12px;background:#edf1ed;border-radius:8px;overflow:hidden}
+.status-chart-track div{height:100%;background:var(--green);border-radius:8px}
+.status-chart-row strong{text-align:right;font-variant-numeric:tabular-nums}
+.value-chart-row{grid-template-columns:130px minmax(0,1fr) 110px}
+.dashboard-chart-title{margin:28px 0 16px}
+.dashboard-chart-title p{color:var(--leaf);margin:0}
+@media(max-width:480px){.dashboard-revenue,.dashboard-heading{align-items:flex-start;flex-direction:column}.status-chart-row{grid-template-columns:100px minmax(0,1fr) 24px;gap:8px;font-size:12px}}
+@media(max-width:480px){.value-chart-row{grid-template-columns:90px minmax(0,1fr) 80px}}

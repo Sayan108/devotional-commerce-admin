@@ -10,11 +10,40 @@ const states = {
 
 export function Dashboard() {
   const query = useApi("/admin/metrics");
-  return <><Topbar title="Shift dashboard"/><Status query={query}>{data =>
-    <div className="metric-grid">{[
-      ["Paid unassigned", "paidUnassigned", "urgent"], ["Due soon", "dueSoon"], ["Packing", "packing"], ["Overdue", "overdue", "danger"]
-    ].map(([label, key, style]) => <article key={key} className={style}><span>{label}</span><strong>{data[key]}</strong></article>)}</div>
-  }</Status><Link to="/orders">Open orders</Link></>;
+  const orders = useApi("/admin/orders");
+  return <><Topbar title="Shift dashboard" subtitle="Live operations overview"/>
+    <Status query={query}>{data => <>
+      <div className="metric-grid">{[
+        ["Paid unassigned", "paidUnassigned", "urgent"], ["Due soon", "dueSoon"], ["Packing", "packing"], ["Overdue", "overdue", "danger"]
+      ].map(([label, key, style]) => <article key={key} className={style}><span>{label}</span><strong>{data[key]}</strong></article>)}</div>
+      <section className="panel dashboard-revenue"><div><h2>Paid order value</h2><p>All-time total, before refunds</p></div><strong>{money(data.revenuePaise)}</strong></section>
+    </>}</Status>
+    <section className="panel"><div className="dashboard-heading"><div><h2>Order status</h2><p>Distribution of the latest 100 orders</p></div><Link to="/orders">Open orders</Link></div>
+      <Status query={orders}>{data => data.items.length ? <StatusCharts orders={data.items}/> : <p>No orders yet.</p>}</Status>
+    </section>
+  </>;
+}
+
+function StatusCharts({ orders }) {
+  const paidStates = ["paid", "ready", "in_transit", "delivered"];
+  const values = paidStates.map(state => ({
+    state, value: orders.filter(order => order.state === state).reduce((sum, order) => sum + order.totalPaise, 0)
+  }));
+  const total = values.reduce((sum, entry) => sum + entry.value, 0);
+  return <>
+    <div className="status-chart">
+      {Object.entries(states).map(([state, label]) => {
+        const count = orders.filter(order => order.state === state).length;
+        return <div className="status-chart-row" key={state}><span>{label}</span><div className="status-chart-track" aria-hidden="true"><div style={{ width: `${count / orders.length * 100}%` }}/></div><strong>{count}</strong></div>;
+      })}
+    </div>
+    <div className="dashboard-chart-title"><h2>Paid order value by status</h2><p>Latest 100 orders, before refunds</p></div>
+    <div className="status-chart">
+      {values.map(({ state, value }) => <div className="status-chart-row value-chart-row" key={state}>
+        <span>{states[state]}</span><div className="status-chart-track" aria-hidden="true"><div style={{ width: `${total ? value / total * 100 : 0}%` }}/></div><strong>{money(value)}</strong>
+      </div>)}
+    </div>
+  </>;
 }
 
 export function Orders() {
