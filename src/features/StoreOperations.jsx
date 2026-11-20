@@ -1,4 +1,5 @@
 ﻿import React, { useState } from "react";
+import { assetUrl } from "../env.ts";
 import { money, request, useApi } from "../shared/api";
 import { ErrorMessage, Status, Topbar } from "../shared/ui";
 
@@ -25,7 +26,7 @@ export function Plans() {
 export function Homepage() {
   const query = useApi("/v1/home");
   return <><Topbar title="Published homepage"/><Status query={query}>{data => <section className="panel"><h2>{data.hero.headline}</h2>
-    <p>{data.hero.cta} · Revision {data.revision}</p><img className="home-poster" src={data.hero.poster} alt="Published homepage photo"/>
+    <p>{data.hero.cta} · Revision {data.revision}</p><img className="home-poster" src={assetUrl(data.hero.poster)} alt="Published homepage photo"/>
   </section>}</Status></>;
 }
 
@@ -70,7 +71,7 @@ function ReturnCard({ entry, refresh }) {
     {entry.detail && <p>{entry.detail}</p>}
     {entry.refundAmountPaise != null && <p>Recorded refund {money(entry.refundAmountPaise)}</p>}
     {entry.photoCount > 0 && <div className="admin-photos">{Array.from({ length: entry.photoCount }, (_, index) =>
-      <img key={index} src={"/admin/returns/" + entry.requestRef + "/photos/" + index} alt={"Return evidence " + (index + 1)}/>
+      <img key={index} src={assetUrl("/admin/returns/" + entry.requestRef + "/photos/" + index)} alt={"Return evidence " + (index + 1)}/>
     )}</div>}
     {action && <form onSubmit={update}>
       {action[0] === "initiated" && <label>Refund amount (₹) <input required type="number" min="0.01" step="0.01" value={amount} onChange={event => setAmount(event.target.value)}/></label>}

@@ -1,8 +1,9 @@
 ﻿import { useEffect, useState } from "react";
+import { env } from "../env.ts";
 
 export async function request(path, { method = "GET", body, signal } = {}) {
-  const response = await fetch(path, {
-    method, signal,
+  const response = await fetch(env.apiUrl + path, {
+    method, signal, credentials: "include",
     ...(body && { headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
   });
   const result = await response.json();
