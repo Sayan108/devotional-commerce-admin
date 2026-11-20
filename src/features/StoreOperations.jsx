@@ -1,26 +1,29 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { assetUrl } from "../env.ts";
 import { money, request, useApi } from "../shared/api";
 import { ErrorMessage, Status, Topbar } from "../shared/ui";
 
 export function Catalog() {
-  const query = useApi("/v1/products");
   const [filter, setFilter] = useState("");
+  const query = useApi("/v1/products?q=" + encodeURIComponent(filter.trim()));
   return <><Topbar title="Catalog"/>
-    <div className="toolbar"><input aria-label="Search products" placeholder="Search SKU" value={filter} onChange={event => setFilter(event.target.value)}/></div>
+    <div className="toolbar"><input aria-label="Search products" placeholder="Search names or keywords" value={filter} onChange={event => setFilter(event.target.value)}/></div>
     <Status query={query}>{data => <section className="panel table-scroll">
-      <table><thead><tr><th>Product</th><th>SKU</th><th>Price</th><th>Stock available</th></tr></thead><tbody>{data.items.filter(product =>
-        (product.name + " " + product.id).toLowerCase().includes(filter.toLowerCase())).map(product =>
-        <tr key={product.id}><td>{product.name}</td><td>{product.id}</td><td>{money(product.pricePaise)}</td><td>{product.stock}</td></tr>)}</tbody></table>
+      {data.items.length ? <table><thead><tr><th>Product</th><th>SKU</th><th>Price</th><th>Stock available</th></tr></thead><tbody>
+        {data.items.map(product => <tr key={product.id}>
+          <td><strong>{product.name}</strong>{product.bengali && <div lang="bn">{product.bengali}</div>}</td>
+          <td>{product.id}</td><td>{product.pricePaise == null ? "Price to be confirmed" : money(product.pricePaise)}</td><td>{product.stock}</td>
+        </tr>)}
+      </tbody></table> : <p>No products found.</p>}
     </section>}</Status>
   </>;
 }
 
 export function Plans() {
   const query = useApi("/admin/plans");
-  return <><Topbar title="Package plans"/><Status query={query}>{data => <section className="package-grid">{data.items.map(plan =>
+  return <><Topbar title="Package plans"/><Status query={query}>{data => data.items.length ? <section className="package-grid">{data.items.map(plan =>
     <article className="panel" key={plan.id}><span>{plan.cadence}</span><h2>{plan.name}</h2><p>{plan.contents}</p><strong>{money(plan.pricePaise)} · {plan.drops} deliveries</strong></article>
-  )}</section>}</Status></>;
+  )}</section> : <p>No recurring plans available.</p>}</Status></>;
 }
 
 export function Homepage() {

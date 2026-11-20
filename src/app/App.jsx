@@ -1,5 +1,5 @@
 ﻿import React, { useState } from "react";
-import { NavLink, Route, Routes } from "react-router-dom";
+import { Link, NavLink, Route, Routes } from "react-router-dom";
 import { StaffLogin } from "../features/StaffLogin";
 import { Dashboard, OrderDetail, Orders } from "../features/Orders";
 import { Catalog, Coverage, Homepage, Plans, Returns } from "../features/StoreOperations";
@@ -25,7 +25,10 @@ export function App() {
   if (!session) return <p role="status">Checking staff access…</p>;
   if (!session.admin) return <StaffLogin onLogin={setIdentity} denied={session.verified && session.account} onLogout={logout}/>;
   return <div className="admin-shell">
-    <aside><strong>Arghya <small lang="bn">অর্ঘ্য</small></strong><nav aria-label="Operations navigation">
+    <aside><Link className="admin-brand" to="/" aria-label="Naivedya operations home">
+      <span><img src="/brand-emblem.png" width="640" height="494" alt=""/></span>
+      <strong>Naivedya</strong>
+    </Link><nav aria-label="Operations navigation">
       {navigation.map(([path, label]) => <NavLink key={path} to={path} end={path === "/"}>{label}</NavLink>)}
     </nav><button className="button secondary staff" onClick={() => logout().catch(setError)}>Sign out</button></aside>
     <main><ErrorMessage error={error}/><Routes>

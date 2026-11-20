@@ -31,7 +31,8 @@ export function StaffLogin({ onLogin, denied, onLogout }) {
   const remaining = challenge ? Math.max(0, Math.ceil((Date.parse(challenge.retryAt) - now) / 1000)) : 0;
   return <main className="staff-login">
     <section className="panel">
-      <h1>Arghya staff</h1>
+      <img className="staff-signature" src="/brand-signature.png" width="600" height="534" alt="Naivedya / নৈবেদ্য"/>
+      <h1>Staff sign-in</h1>
       {denied ? <>
         <p>Sign in with an authorized staff mobile number.</p>
         <button className="button" disabled={busy} onClick={() => run(onLogout)}>Switch mobile number</button>
