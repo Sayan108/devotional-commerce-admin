@@ -11,6 +11,15 @@ export async function request(path, { method = "GET", body, signal } = {}) {
   return result;
 }
 
+export async function uploadMedia(file) {
+  const response = await fetch(env.apiUrl + "/admin/media", {
+    method: "POST", credentials: "include", headers: { "Content-Type": file.type }, body: file
+  });
+  const result = await response.json();
+  if (!response.ok) throw new Error(result.message || "Image upload failed.");
+  return result.url;
+}
+
 export function useApi(path) {
   const [state, setState] = useState({});
   const [version, setVersion] = useState(0);

@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { dateTime, money, request, useApi } from "../shared/api";
 import { ErrorMessage, Status, Topbar } from "../shared/ui";

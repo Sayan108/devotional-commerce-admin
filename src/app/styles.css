@@ -35,3 +35,9 @@ body{margin:0;background:#f4f1e8;color:var(--ink);font:14px/1.45 var(--body)}
 .dashboard-chart-title p{color:var(--leaf);margin:0}
 @media(max-width:480px){.dashboard-revenue,.dashboard-heading{align-items:flex-start;flex-direction:column}.status-chart-row{grid-template-columns:100px minmax(0,1fr) 24px;gap:8px;font-size:12px}}
 @media(max-width:480px){.value-chart-row{grid-template-columns:90px minmax(0,1fr) 80px}}
+.cms textarea,.cms select{width:100%;font:inherit;border:1px solid var(--line);border-radius:6px;background:white;padding:10px;min-height:44px}
+.cms textarea{min-height:100px;resize:vertical}
+.cms input[type=checkbox]{min-height:0;width:18px;height:18px;vertical-align:middle}
+.cms form>p{margin:12px 0}
+.cms-actions{flex-wrap:wrap}
+@media(max-width:800px){.admin-shell .staff{display:block;align-self:flex-end;margin-top:8px;min-height:40px}}

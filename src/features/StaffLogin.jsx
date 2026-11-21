@@ -46,7 +46,6 @@ export function StaffLogin({ onLogin, denied, onLogout }) {
         {challenge ? <>
           <label>Verification code<input required inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6}" maxLength={6}
             value={code} onChange={event => setCode(event.target.value.replace(/\D/g, ""))}/></label>
-          {challenge.fixtureCode && <p>Demo verification code <strong>{challenge.fixtureCode}</strong></p>}
         </> : <label>Mobile number (+91)<input required type="tel" autoComplete="tel-national" pattern="[6-9][0-9]{9}" maxLength={10}
           value={phone} onChange={event => setPhone(event.target.value.replace(/\D/g, ""))}/></label>}
         <button className="button" type="submit" disabled={busy}>{challenge ? "Verify code" : "Send code"}</button>

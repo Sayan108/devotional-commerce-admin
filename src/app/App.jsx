@@ -1,14 +1,15 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { Link, NavLink, Route, Routes } from "react-router-dom";
 import { StaffLogin } from "../features/StaffLogin";
 import { Dashboard, OrderDetail, Orders } from "../features/Orders";
 import { Catalog, Coverage, Homepage, Plans, Returns } from "../features/StoreOperations";
+import { Customers, CustomerDetail } from "../features/Customers";
 import { request, useApi } from "../shared/api";
 import { ErrorMessage } from "../shared/ui";
 
 const navigation = [
   ["/", "Dashboard"], ["/orders", "Orders"], ["/catalog", "Catalog"], ["/packages", "Packages"],
-  ["/content/home", "Homepage CMS"], ["/coverage", "Coverage"], ["/returns", "Returns"]
+  ["/content/home", "Homepage CMS"], ["/customers", "Customers"], ["/coverage", "Coverage"], ["/returns", "Returns"]
 ];
 
 export function App() {
@@ -38,6 +39,8 @@ export function App() {
       <Route path="/catalog" element={<Catalog/>}/>
       <Route path="/packages" element={<Plans/>}/>
       <Route path="/content/home" element={<Homepage/>}/>
+      <Route path="/customers" element={<Customers/>}/>
+      <Route path="/customers/:ref" element={<CustomerDetail/>}/>
       <Route path="/coverage" element={<Coverage/>}/>
       <Route path="/returns" element={<Returns/>}/>
     </Routes></main>

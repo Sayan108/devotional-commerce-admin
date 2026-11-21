@@ -16,3 +16,9 @@ Run `npm run build` to produce `dist/`. The production build defaults to the hos
 The app shell lives in `src/app`, seller workflows in `src/features`, and the API client and shared UI in `src/shared`.
 
 The dashboard shows all-time paid order value before refunds and charts the status and paid value of the latest 100 orders.
+
+Catalog management supports categories and product drafts and editing their first variant: bilingual text, aliases, images, price, active status, and a reasoned adjustment to available stock. Existing order snapshots are not changed. The homepage editor saves drafts and publishes or restores revisions for the hero, featured IDs, category IDs, section order and kit content. Customer support lists up to 100 customers with orders using masked phone numbers and stores internal cases and notes. Do not put full phone numbers or sensitive personal information in notes. Coverage changes affect new delivery checks. Package drafts can be published without changing existing orders.
+
+Image uploads require Cloudinary credentials configured on the backend; images are uploaded into the `naivedya` folder. The sign-in screen does not display demo verification codes; local demo sign-in still uses the code documented in the backend setup.
+
+Additional variant management, homepage help content and full storefront previews, full CRM search, and courier integrations are not yet implemented.
